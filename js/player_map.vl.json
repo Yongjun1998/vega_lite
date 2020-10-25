@@ -1,0 +1,41 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "title": "Register soccer player in European from all over the world",
+  "width": 800,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/Yongjun1998/vega_lite/main/js/world.geo.json",
+    "format": {"type": "topojson", "feature": "world"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.name",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/Yongjun1998/vega_lite/main/data/FullData.csv"
+        },
+        "key": "country",
+        "fields": ["Register_player_number"]
+      }
+    },
+    {"calculate": "datum.Register_player_number", "as": "numbers"}
+  ],
+  "projection": {"type": "equalEarth"},
+  "mark": {"type": "geoshape", "stroke": "lightgrey"},
+  "encoding": {
+    "color": {
+      "field": "numbers",
+      "type": "quantitative",
+      "scale": {
+        "type": "threshold",
+        "domain": [200, 500, 800, 1000],
+        "range": ["#ffffcc", "#a1dab4", "#41b6c4", "#2c7fb8", "#253494"]
+      }
+    },
+    "tooltip": [
+      {"field": "properties.name", "type": "nominal", "title": "country"},
+      {"field": "Register_player_number", "type": "quantitative"}
+    ]
+  },
+  "config": {}
+}

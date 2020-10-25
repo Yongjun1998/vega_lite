@@ -1,8 +1,8 @@
 #player_map 「
-	/*left: 500px;
-	right: 500px;*/
-	height: 400px;
-	width: 300px;
+	left: 1000px;
+	right: 1000px;
+	/*height: 400px;
+	width: 300px;*/
 }
 #player_bubble {
 	left: 100px;

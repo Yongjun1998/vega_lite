@@ -1,0 +1,179 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "title": "Less than 30 years old Register soccer player in European",
+  "width": 700,
+  "height": 500,
+  "data": {
+    "url": "https://raw.githubusercontent.com/Yongjun1998/vega_lite/main/data/FullData.csv"
+  },
+  "params": [
+    {
+      "name": "Register_Above",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 0,
+        "max": 1100,
+        "step": 100,
+        "name": "Minimum Register players: "
+      }
+    },
+    {
+      "name": "CapitalOfCountryName_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z"
+        ],
+        "labels": [
+          "Show all",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z"
+        ],
+        "name": "Capital Choose:"
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.Register_player_number > 0"},
+    {"filter": "datum.Player_less_than_30_years_old > 0"},
+    {
+      "filter": "CapitalOfCountryName_selection == null || datum.CapitalOfCountryName == CapitalOfCountryName_selection"
+    },
+    {"filter": "datum.Register_player_number > Register_Above"},
+    {
+      "calculate": "datum.Player_less_than_30_years_old/datum.        Register_player_number",
+      "as": "Percentage of players at the peak"
+    }
+  ],
+  "selection": {
+    "Capital_Of_name_highlight": {
+      "type": "multi",
+      "fields": ["CapitalOfCountryName"],
+      "bind": "legend"
+    }
+  },
+  "mark": "circle",
+  "encoding": {
+    "x": {
+      "field": "Register_player_number",
+      "type": "quantitative",
+      "title": "Register_player_number",
+      "axis": {"tickCount": 5},
+      "scale": {"type": "log", "domain": [1, 10000]}
+    },
+    "y": {
+      "field": "Player_less_than_30_years_old",
+      "type": "quantitative",
+      "axis": {"tickCount": 4},
+      "scale": {"type": "log", "domain": [1, 1000]}
+    },
+    "color": {
+      "field": "CapitalOfCountryName",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z"
+        ]
+      }
+    },
+    "opacity": {
+      "condition": {"selection": "Capital_Of_name_highlight", "value": 0.8},
+      "value": 0.2
+    },
+    "tooltip": [
+      {"field": "country", "type": "nominal"},
+      {
+        "field": "Register_player_number",
+        "type": "quantitative",
+        "format": ","
+      },
+      {
+        "field": "Player_less_than_30_years_old",
+        "type": "quantitative",
+        "format": ","
+      },
+      {
+        "field": "Percentage of players at the peak",
+        "type": "quantitative",
+        "format": ".2f"
+      }
+    ]
+  },
+  "config": {}
+}

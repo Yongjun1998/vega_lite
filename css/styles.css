@@ -1,6 +1,7 @@
 #player_map {
-	left: 100px;
-	right: 100px;
+	position: absolute;
+	left: 500px;
+/* 	right: 100px; */
 	/*height: 400px;
 	width: 300px;*/
 }

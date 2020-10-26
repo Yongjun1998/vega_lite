@@ -1,12 +1,10 @@
 #player_map {
-	position: absolute;
 	left: 100px;
  	right: 100px; 
 	/*height: 400px
 	width: 300px;*/
 }
 #player_bubble {
-	position: absolute;
 	left: 100px;
 	right: 100px;
 	/*height: 1000px;
